@@ -1,1 +1,1 @@
-This is a bot.
+PingBot is a Discord bot made using Python 3.
