@@ -25,7 +25,8 @@ log.addHandler(handler)
 #client
 bot = discord.Client()
 
-counter = 0
+#variables
+no_delete = "102229818308857856"
 
 if not discord.opus.is_loaded():
 	discord.opus.load_opus('libopus-0.dll')
@@ -78,11 +79,10 @@ def on_ready():
 		print(server.name)
 
 #Temporarily disable message_delete
-#@bot.async_event
-#def on_message_delete(msg):
-#	if counter != 10:
-#		counter += 1
-#		yield from bot.send_message(msg.channel, "`{0.author.name}` deleted the message:\r\n`{0.content}`".format(msg))
+@bot.async_event
+def on_message_delete(msg):
+	if msg.server.id != no_delete:
+		yield from bot.send_message(msg.channel, "`{0.author.name}` deleted the message:\r\n`{0.content}`".format(msg))
 
 @bot.async_event
 def on_member_join(member):
