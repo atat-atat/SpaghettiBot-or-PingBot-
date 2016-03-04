@@ -1,0 +1,8 @@
+Comp commands can start or terminate a bot component.
+USAGE: !comp <option> <component>
+Options -
+start 	 -- starts a bot component.
+end   	 -- terminates a bot component.
+Components -
+musicbot -- an experimental music bot.
+talkbot  -- an experimental bot that can talk to the user. (NOT READY)

@@ -1,0 +1,4 @@
+Change commands are commands that display changes made to a project, and can also (COMING SOON) modify change files via commands.
+Current change options -
+o / open  -- loads a change file.
+h / help  -- returns the help information.

@@ -1,0 +1,15 @@
+To use the !help command, you must specify a help type.
+Below is a list of help types -
+get       -- returns information about Get commands.
+transform -- returns information about Transform commands.
+odd       -- returns information about Odd commands.
+calc      -- returns information about the Calculator.
+swearlist -- returns information about Swear commands.
+test      -- returns information about Test commands.
+proj      -- returns information about Project commands.
+meme      -- returns information about Meme commands.
+default   -- returns information about the system commands.
+notes     -- returns information about Note commands.
+comp      -- returns information about Component commands.
+
+EXAMPLE: !help odd <-- returns information about odd commands.

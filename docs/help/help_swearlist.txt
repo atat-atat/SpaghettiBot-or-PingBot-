@@ -1,0 +1,7 @@
+These commands return certain lists of swears words in different languages.
+japanese  -- returns a list of swear words in Japanese.
+italian -- returns a list of swear words in Italian.
+swedish -- returns a list of swear words in Swedish.
+english  -- returns a list of swear words in English.
+portuguese -- returns a list of swear words in Portuguese.
+spanish -- returns a list of swear words in Spanish.

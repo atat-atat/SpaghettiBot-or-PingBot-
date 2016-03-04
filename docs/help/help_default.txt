@@ -1,0 +1,8 @@
+These commands are PingBot's default system commands.
+help      -- returns information about commands.
+author    -- returns information about the author.
+version   -- returns information about the version.
+join      -- joins an invite url.
+updavatar -- updates the avatar to the current file.
+welcome   -- returns the welcome message. USAGE: !welcome @<USER>
+info      -- returns the beginners-welcome message. (This is different from !serverinfo)

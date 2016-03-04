@@ -1,0 +1,2 @@
+Unknown server, or there is no info text file supplied with this server.
+(Use !info_edit to change the information of your server.)

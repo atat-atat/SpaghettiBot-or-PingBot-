@@ -1,0 +1,10 @@
+This is a very basic calculator.
+To use a calculator command, type !calc <VALUE1> <OPERATION> <VALUE2>
+This calculator feature is very limited and will only allow different types of operations, and only two values.
+Decimals and variables won't work.
+
+Operations -
++ -- addition.
+- -- subtraction.
+* -- multiplication.
+/ -- divide.

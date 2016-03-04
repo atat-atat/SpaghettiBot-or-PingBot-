@@ -1,0 +1,14 @@
+These commands are for the game developers.
+changes -- returns information about changes made on a specific project. USAGE: !changes <PROJNAME>
+lopen   -- opens a text file to read. USAGE: !lopen <PROJNAME> <FILE>
+report  -- reports a problem. USAGE: !report :<PROJNAME> :<TEXT>
+viewreport -- views a project report file. USAGE: !report <PROJNAME>
+build   -- gets the latest build of the aos project. USAGE: !build
+status  -- a work-around for editing the gmk. this specifies if the user is editing
+the current gmk file. USAGES: !status s - sets the status to edit.
+			      !status sn- sets the status to non-edit.
+			      !status c - checks the status.
+
+Change files can only be modified manually.
+Projects -
+aos     -- aos rpg game being ran by Oppy and Spod.

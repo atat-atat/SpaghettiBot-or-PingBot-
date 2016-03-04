@@ -1,0 +1,5 @@
+These commands change specific Bot information.
+To use transform commands, you must type !transform :<TRANSFORM> :<VALUE>
+name      -- changes the bot name.
+nameorig  -- sets the bot name back to its original name.
+game      -- set the bots game status.

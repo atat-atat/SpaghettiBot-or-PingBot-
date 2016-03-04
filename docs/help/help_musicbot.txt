@@ -1,0 +1,12 @@
+The experimental Music Bot-addition to PingBot is still unstable and has been categorized in the Test commands section.
+To use the experimental Music Bot, you must be connected to a channel where voice can be used.
+Music Bot is not always on/available, so these commands may not work at specific times.
+
+Music Bot Options -
+play     -- starts a voice connection and begins to stream a song selected by the user. USAGE: !music play <YT_URL>
+playlast -- plays the last streamed song.
+stop     -- stops the music stream.
+resume   -- resumes the music stream.
+pause    -- pauses the music stream.
+dl       -- same thing as play.
+disc     -- disconnects from the voice channel.

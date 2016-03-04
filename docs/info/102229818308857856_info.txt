@@ -1,0 +1,2 @@
+This is a great chat for socializing with other users.
+You can also use commands to further illustrate your message, via !help meme or !listreplacements.

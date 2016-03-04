@@ -1,0 +1,5 @@
+These commands are only for testing.
+multctest -- multiple text input test (goes up to 3.)
+music     -- experimental music bot. (subcommands: play, pause, resume and stop. So far only play works.)
+say       -- makes the bot say assigned text. (USAGE: !say :<TEXT>)
+checkrole -- (DOES NOT CURRENTLY WORK) returns admin information.

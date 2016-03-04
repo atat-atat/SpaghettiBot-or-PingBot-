@@ -1,0 +1,6 @@
+These commands are used to raise a Pet Rock.
+raise -- create a Pet Rock.
+check -- check on your Pet Rock.
+feed  -- feed your Pet Rock.
+kill  -- kill your Pet Rock.
+throw -- throw your Pet Rock.

@@ -1,0 +1,9 @@
++---------- PingBot Version Information ----------+
+**PingBot v1.6 -**
+* implemented note commands. (!help notes)
+* implemented experimental music bot. (!help musicbot)
+* implemented experimental bot components.
+* merged most dev commands to !proj.
+* implemented some more exception handling.
+* bot messages are now somewhat quicker.
++----------------------------------+

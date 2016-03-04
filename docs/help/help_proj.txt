@@ -1,0 +1,16 @@
+These commands are for game developers.
+USAGE: !proj ;<option> ;<project> ;<x>
+Options -
+report -- submits a report about a project. (!proj ;report ;<project> ;<report>)
+viewreport -- returns total reports. (!proj ;viewreport ;<project>)
+clearreport -- clears a report file. (!proj ;clearreport)
+build       -- gets the latest available build of the project. (!proj ;build)
+lclopen     -- opens a text document.
+status      -- used to set the status for a GMK file. (!proj ;status ;<option>)
+	s  -- sets the GMK status to being used.
+	sn -- sets the GMK status to available.
+	c  -- checks the GMK status.
+
+Change files can only be modified manually.
+Projects -
+aos     -- aos rpg game being ran by Oppy and Spod.

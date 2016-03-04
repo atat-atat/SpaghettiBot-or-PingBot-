@@ -1,0 +1,2 @@
+These commands are 'dangerous' commands, meaning that running these can cause some problems.
+joinvoice -- joins the voice channel and plays an annoying shrek song. the bot will not stop playing until the song is over, meaning that you will have to sit through hell.

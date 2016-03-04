@@ -1,0 +1,8 @@
+These commands are miscellaneous.
+ping        -- plays a game of Ping Pong against the bot.
+dice        -- returns a random dice integer.
+letter      -- returns a random letter of the alphabet.
+pay         -- pays respect.
+coinflip    -- flips a coin.
+trueorfalse -- returns true or false.
+yesorno     -- returns yes or no.

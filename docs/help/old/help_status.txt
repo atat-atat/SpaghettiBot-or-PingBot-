@@ -1,0 +1,6 @@
+These commands set the projects GMK status.
+To use it, you must type !status <OPTION>
+Below is a list of options -
+s  -- set the gmk status to edit.
+sn -- set the gmk status to available.
+c  -- check the gmk status.

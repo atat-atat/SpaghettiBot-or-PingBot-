@@ -1,0 +1,39 @@
+(Using commands that require user input is used like this: !say :Hello. Calculator commands are exceptions.)
+help      : returns information about the commands.
+author    : returns information about the author.
+version   : returns information about the version.
+changelog : shows the changelog.
+join      : joins an invite url.
+updavatar : updates the avatar to the current file.
+joinvoice : joins the voice channel.
+say       : makes the bot say something.
++---------- Transform Commands ----------+
+To use a transform command, type !transform :<TYPE> :<VALUE>.
+The following lists the transform types.
+name      : changes the bot name.
+nameorig  : sets the bot name back to the original name.
+game      : set the bots game status.
++---------- calculator Commands ----------+
+This calculator is very basic, using letters/variables or decimals won't work.
+To use the calculator, you need to type !calc <VALUE1> <OPERATION> <VALUE2>
+(+)       : adds two numbers together.
+(-)       : subtracts two numbers.
+(*)       : multiplies two numbers.
+(/)       : divides two numbers.
++---------- Get Commands ----------+
+avatar    : gets the avatar of a user.
+userinfo  : gets the information of a user.
++---------- Odd Commands ----------+
+dice      : rolls dice.
+ping      : plays ping pong.
+oddemote  : returns a list of Odd emoticons.
+letter    : returns a letter from the alphabet.
++---------- Swear Commands ----------+
+japswears : returns a list of Japanese swear words.
+italswears: returns a list of Italian swear words.
+swedswears: returns a list of Swedish swear words.
+engswears : returns a list of English swear words.
+portswears: returns a list of Portuguese swear words.
++---------- Test Commands ----------+
+These commands don't really serve a purpose.
+multctest : Multiple text input test (goes up to 3.)

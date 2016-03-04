@@ -1,0 +1,7 @@
+These commands are related to the Note set of commands in PingBot.
+(!notes command cannot be used similarily to !note commands. !notes is only for reading with the default text format.)
+add -- adds a note. USAGE: !note ;add ;<NAME> ;<TEXT>/<VALUE>
+edit -- edits a note. USAGE: !note ;edit ;<NAME> ;<TEXT>/<VALUE>
+read -- reads a note. USAGE: !note ;read ;<NAME> or alternatively, you can just type !notes <NAME> instead.
+readreal -- reads a note but in regular text format. USAGE: !note ;readreal ;<NAME>
+list -- lists all known notes.

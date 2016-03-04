@@ -1,0 +1,14 @@
+The Gossip Group Discord server is a place where you can socialize with other users.
+If you would like to speak with a developer, you can mention them.
+(via doing @ and then their name. EX: @person)
+If you would like to know who the developers are, just type !developers.
+
+!help is also a great source for command information, just type it in the chat.
+We occasionally have a "radio station," where either PingBot,
+or a specific user streams music in, GrooveClub FM, or PingBot AM.
+To join a channel, simply click on a voice channel. (If you would like a screenshot-demonstration,
+type !notes voice.)
+
+If you would like to help contribute to a project, you can type !build to download the latest build of the current
+project, and use !report ;aos ;<TEXT> to report a problem.
+You can also talk with the developers if you would like to contribute work other than testing.
