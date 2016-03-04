@@ -238,8 +238,10 @@ def cmd_petrock(bot, msg, cmds, usage="`USAGE: !petrock <action> <optional>`"):
 		petrock_raised = 0
 		petrock_hp = 0
 		petrock_health = "has shattered."
-		yield from bot.send_typing(msg.channel)
-		yield from bot.send_message(msg.channel, "Your Pet Rock has shattered.")
+		if len(msg.mentions) > 0:
+			for user in msg.mentions:
+				yield from bot.send_typing(msg.channel)
+				yield from bot.send_message(msg.channel, "{} threw his pet rock at {}.\r\n**And it shattered into a million pieces.**".format(msg.author.mention,user.mention))
 	if petrock_hp < 5:
 		petrock_health = "feels depressed."
 	elif petrock_hp >= 10:
@@ -668,40 +670,44 @@ def cmd_report(bot, msg, cmds, usage='`USAGE: !report ;<project> ;<report>`'):
 		yield from bot.send_message(msg.channel, "Error! That project doesn't seem to exist!\r\nBe sure to check the project list via `!help proj`.")
 
 def cmd_comp(bot, msg, cmds, usage="`USAGE: !comp <option> <component>`"):
-	try:
-		option = msg.content.split(" ")[1]
-		comp = msg.content.split(" ")[2]
-		if option == "start":
-			yield from bot.send_typing(msg.channel)
-			mes = yield from bot.send_message(msg.channel, "*Attempting to start bot component...*")
-			try:
-				#yield from bot.send_typing(msg.channel)
+	if msg.author.id == bot_owner:
+		try:
+			option = msg.content.split(" ")[1]
+			comp = msg.content.split(" ")[2]
+			if option == "start":
+				yield from bot.send_typing(msg.channel)
+				mes = yield from bot.send_message(msg.channel, "*Attempting to start bot component...*")
+				try:
+					#yield from bot.send_typing(msg.channel)
 
-				#start = msg.content.split(" ")[3]
-				os.startfile(comp+".bat")
-				yield from bot.delete_message(mes)
-				yield from bot.send_message(msg.channel, "Successfully started bot component!\r\n(May take a while to load.)")
-				global end
-				end = comp+".bat"
-			except (FileNotFoundError, IndexError):
-				yield from bot.delete_message(mes)
+					#start = msg.content.split(" ")[3]
+					os.startfile(comp+".bat")
+					yield from bot.delete_message(mes)
+					yield from bot.send_message(msg.channel, "Successfully started bot component!\r\n(May take a while to load.)")
+					global end
+					end = comp+".bat"
+				except (FileNotFoundError, IndexError):
+					yield from bot.delete_message(mes)
+					yield from bot.send_typing(msg.channel)
+					yield from bot.send_message(msg.channel, "Error! Failed to start bot component!\r\nEither you did not include a valid component name, or the component does not exist!\r\n{}".format(usage))
+			elif option == "end":
 				yield from bot.send_typing(msg.channel)
-				yield from bot.send_message(msg.channel, "Error! Failed to start bot component!\r\nEither you did not include a valid component name, or the component does not exist!\r\n{}".format(usage))
-		elif option == "end":
-			yield from bot.send_typing(msg.channel)
-			mes = yield from bot.send_message(msg.channel, "*Attempting to terminate bot component!*")
-			try:
-				yield from bot.send_typing(msg.channel)
+				mes = yield from bot.send_message(msg.channel, "*Attempting to terminate bot component!*")
+				try:
+					yield from bot.send_typing(msg.channel)
 
-				os.system("TASKKILL /F /IM {}.py".format(comp))
-				yield from bot.send_typing(msg.channel)
-				yield from bot.send_message(msg.channel, "Successfully terminated bot component!")
-			except FileNotFoundError:
-				yield from bot.send_typing(msg.channel)
-				yield from bot.send_message(msg.channel, "Failed to terminate previous bot component as it does not exist!")
-	except IndexError:
+					os.system("TASKKILL /F /IM {}.py".format(comp))
+					yield from bot.send_typing(msg.channel)
+					yield from bot.send_message(msg.channel, "Successfully terminated bot component!")
+				except FileNotFoundError:
+					yield from bot.send_typing(msg.channel)
+					yield from bot.send_message(msg.channel, "Failed to terminate previous bot component as it does not exist!")
+		except IndexError:
+			yield from bot.send_typing(msg.channel)
+			yield from bot.send_message(msg.channel, "Error! Failed to get option or component.\r\n{}".format(usage))
+	else:
 		yield from bot.send_typing(msg.channel)
-		yield from bot.send_message(msg.channel, "Error! Failed to get option or component.\r\n{}".format(usage))
+		yield from bot.send_message(msg.channel, "You do not have the permission to use this command!")
 
 def cmd_restart(bot, msg, cmds, usage='`USAGE: !restart`'):
 	if msg.author.id == bot_owner:
