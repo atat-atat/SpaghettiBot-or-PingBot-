@@ -568,6 +568,15 @@ def cmd_serverinfo(bot, msg, cmds, usage='`USAGE: !getserver`'):
 	yield from bot.send_typing(msg.channel)
 	yield from bot.send_message(msg.channel, "```+---------- Server Info of {} ----------+\r\nServer Name: {}\r\nServer ID: {}\r\nRegion: {}\r\nOwner: {}\r\nAFK Channel: {}\r\nAFK Timeout: {}\r\nDefault Role: {}\r\nDefault Channel: {}\r\nDefault Channel ID: {}\r\nCurrent Channel ID: {}\r\nServer Icon: {}\r\n+----------------------------------+```{}".format(srvr.name, srvr.name, srvr.id, srvr.region, srvr.owner, srvr.afk_channel, srvr.afk_timeout, srvr.default_role.name, srvr.default_channel, srvr.default_channel.id, msg.channel.id, srvr.icon, srvr.icon_url))
 
+def cmd_getinvite(bot, msg, cmds, usage="`USAGE: !getinvite`"):
+	if msg.channel.is_private:
+		yield from bot.send_typing(msg.channel)
+		yield from bot.send_message(msg.channel, "You cannot use this command in a PM!")
+	else:
+		yield from bot.create_invite(msg.channel)
+		yield from bot.send_typing(msg.channel)
+		yield from bot.send_message(msg.channel, "Got invite: ")
+
 def cmd_servers(bot, msg, cmds, usage="`USAGE: !servers`"):
 	for server in bot.servers:
 		yield from bot.send_typing(msg.channel)
@@ -1102,6 +1111,7 @@ commands = {
 	"!kick":cmd_kicku,
 	"!ban":cmd_banu,
 	"!unban":cmd_unbanu,
+	"!invite":cmd_getinvite,
 	#Misc Fun commands -
 	"!petrock":cmd_petrock,
 	#Start Bot commands -
