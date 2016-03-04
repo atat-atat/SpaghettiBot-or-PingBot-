@@ -2,3 +2,8 @@ pingbot.ini
 senpaibot.ini
 __pycache__/*
 lib/__pycache__/*
+commands.ini
+commands.txt
+pingbot.bat
+musicbot.bat
+senpaibot.bat
