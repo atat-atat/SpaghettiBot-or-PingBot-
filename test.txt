@@ -1,8 +1,0 @@
-Hello
-This
-Is
-A
-File.Read
-Test
-Thanks
-Fuck you

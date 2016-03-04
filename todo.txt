@@ -1,4 +1,0 @@
-```--- TODO LIST ---
-- revise dev commands.
-- revise music bot.
-```
