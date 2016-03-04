@@ -260,24 +260,42 @@ def cmd_petrock(bot, msg, cmds, usage="`USAGE: !petrock <action> <optional>`"):
 			for user in msg.mentions:
 				yield from bot.send_typing(msg.channel)
 				yield from bot.send_message(msg.channel, "{} threw his pet rock at {}.\r\n**And it shattered into a million pieces.**".format(msg.author.mention,user.mention))
+	elif action == "sex":
+		yield from bot.send_typing(msg.channel)
+		yield from bot.send_message(msg.channel, "Your pet rock isn't in the mood.")
 	if petrock_hp < 5:
 		petrock_health = "feels depressed."
-	elif petrock_hp >= 10:
+	elif petrock_hp > 10:
 		petrock_health = "is doing fine."
-	elif petrock_hp >= 20:
+	elif petrock_hp > 15:
+		petrock_health = "is still feeling fine."
+	elif petrock_hp > 20:
 		petrock_health = "feels okay."
-	elif petrock_hp >= 30:
+	elif petrock_hp > 30:
 		petrock_health = "is doing alright."
-	elif petrock_hp >= 40:
+	elif petrock_hp > 40:
 		petrock_health = "is feeling better. Not great, but better."
-	elif petrock_hp >= 50:
+	elif petrock_hp > 50:
 		petrock_health = "is enjoying the company."
-	elif petrock_hp >= 60:
+	elif petrock_hp > 60:
 		petrock_health = "is looking healthy."
-	elif petrock_hp >= 70:
+	elif petrock_hp > 70:
 		petrock_health = "feels like it has some sunshine."
-	elif petrock_hp >= 80:
+	elif petrock_hp > 80:
 		petrock_health = "feels like grabbing a bite to eat."
+	elif petrock_hp >= 90:
+		petrock_health = "feels like going to the local black market."
+	elif petrock_hp >= 99:
+		petrock_health = "has bought a gun and is starting to feel a strange feeling."
+	elif petrock_hp >= 100:
+		petrock_health = "shot a man."
+	elif petrock_hp >= 109:
+		petrock_health = "is running from the cops."
+	elif petrock_hp >= 112:
+		petrock_health = "feels the weight of his actions."
+	elif petrock_hp >= 120:
+		petrock_health = "is plotting something."
+
 
 def cmd_game(bot, msg, cmds, usage="`USAGE: !game ;GAME`"):
 	if msg.channel.is_private:
@@ -710,9 +728,6 @@ def cmd_comp(bot, msg, cmds, usage="`USAGE: !comp <option> <component>`"):
 				yield from bot.send_typing(msg.channel)
 				mes = yield from bot.send_message(msg.channel, "*Attempting to start bot component...*")
 				try:
-					#yield from bot.send_typing(msg.channel)
-
-					#start = msg.content.split(" ")[3]
 					os.startfile(comp+".bat")
 					yield from bot.delete_message(mes)
 					yield from bot.send_message(msg.channel, "Successfully started bot component!\r\n(May take a while to load.)")
@@ -773,29 +788,6 @@ def cmd_why(bot, msg, cmds, usage='`USAGE: !why <category>`'):
 		why_file.close()
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, "```{}```\r\nError! Could not find that category.".format(whyf))
-
-#
-#def cmd_sim(bot, msg, cmds, usage="`USAGE: !sim ;<option> ;<sim_name> ;<options2>`"):
-#	try:
-#		option = msg.content.split(" ;")[1]
-#		name = msg.content.split(" ;")[2]
-#		if option == ""
-#	except IndexError:
-#		yield from bot.send_typing(msg.channel)
-#		yield from bot.send_message(msg.channel, "You must specify what you want to do!\r\n{}".format(usage))
-
-
-#!proj ;changes ;<PROJECT>
-#!proj ;lclopen ;<FILE>
-#!proj ;report ;<PROJECT> ;<"">
-#!proj ;viewreport ;<PROJ>
-#!proj ;clearreport ;<PROJ>
-#!proj ;build ;<PROJ>
-#!proj ;status ;<PROJ>
-
-#def cmd_servericon(bot, msg, cmds):
-#	yield from bot.send_message(msg.channel, "{}".format(icon_url())
-
 
 #------ Old Fat Ned Merge ---------
 def cmd_autism(bot, msg, cmds, usage='`USAGE: !autism @<user>`'):
@@ -1070,6 +1062,10 @@ def cmd_worry(bot, msg, cmds):
 	yield from bot.send_typing(msg.channel)
 	yield from bot.send_message(msg.channel, "http://i.imgur.com/cRF40Wq.gif")
 
+def cmd_swearing(bot, msg, cmds):
+	yield from bot.send_typing(msg.channel)
+	yield from bot.send_message(msg.channel, "http://i.imgur.com/MLnRBvx.gif")
+
 
 commands = {
 	"!help":cmd_commands,
@@ -1177,6 +1173,7 @@ commands = {
 	"!newyears":cmd_newyears,
 	"!smile":cmd_smiley,
 	"!sad":cmd_sad,
+	"!swearing":cmd_swearing,
 	#Developer commands -
 	"!proj":cmd_proj,
 	"!report":cmd_report,
