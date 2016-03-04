@@ -148,6 +148,24 @@ def cmd_system(bot, msg, cmds, usage='`USAGE: !sys ;<option> ;<value1> ;<optvalu
 			yield from bot.send_typing(msg.channel)
 			yield from bot.send_message(msg.channel, "Error! You must specify what you want to do.\r\n{}".format(usage))
 
+def cmd_join(bot, msg, cmds, usage="`USAGE: !join <invite_url>`"):
+	try:
+		invite = msg.content.split(" ")[1]
+		yield from bot.send_typing(msg.channel)
+		yield from bot.send_message(msg.channel, "Joining server...")
+		yield from bot.accept_invite(invite)
+	except IndexError:
+		yield from bot.send_typing(msg.channel)
+		yield from bot.send_message(msg.channel, "Error! Failed to join that invite!")
+
+def cmd_leave(bot, msg, cmds, usage="`USAGE: !leave`"):
+	if msg.channel.is_private:
+		yield from bot.send_typing(msg.channel)
+		yield from bot.send_message(msg.channel, "You cannot use that command in a PM!")
+	else:
+		if msg.author.id == msg.server.owner.id or msg.author.id == bot_owner:
+			yield from bot.leave_server(msg.server)
+
 #+------ Owner Commands ------+
 def cmd_kicku(bot, msg, cmds, usage="`USAGE: !kick <@user>`"):
 	if msg.channel.is_private:
@@ -548,7 +566,7 @@ def cmd_userinfo(bot, msg, cmds, usage='`USAGE: !getuser @<user>`'):
 def cmd_serverinfo(bot, msg, cmds, usage='`USAGE: !getserver`'):
 	srvr = msg.server
 	yield from bot.send_typing(msg.channel)
-	yield from bot.send_message(msg.channel, "```+---------- Server Info of {} ----------+\r\nServer Name: {}\r\nServer ID: {}\r\nRegion: {}\r\nOwner: {}\r\nDefault Role: {}\r\nDefault Channel: {}\r\nDefault Channel ID: {}\r\nCurrent Channel ID: {}\r\nServer Icon: {}\r\n+----------------------------------+```{}".format(srvr.name, srvr.name, srvr.id, srvr.region, srvr.owner, srvr.default_role.name, srvr.default_channel, srvr.default_channel.id, msg.channel.id, srvr.icon, srvr.icon_url))
+	yield from bot.send_message(msg.channel, "```+---------- Server Info of {} ----------+\r\nServer Name: {}\r\nServer ID: {}\r\nRegion: {}\r\nOwner: {}\r\nAFK Channel: {}\r\nAFK Timeout: {}\r\nDefault Role: {}\r\nDefault Channel: {}\r\nDefault Channel ID: {}\r\nCurrent Channel ID: {}\r\nServer Icon: {}\r\n+----------------------------------+```{}".format(srvr.name, srvr.name, srvr.id, srvr.region, srvr.owner, srvr.afk_channel, srvr.afk_timeout, srvr.default_role.name, srvr.default_channel, srvr.default_channel.id, msg.channel.id, srvr.icon, srvr.icon_url))
 
 def cmd_servers(bot, msg, cmds, usage="`USAGE: !servers`"):
 	for server in bot.servers:
@@ -853,7 +871,7 @@ def cmd_rip(bot, msg, cmds):
 	yield from bot.send_message(msg.channel, "http://i.imgur.com/Ij5lWrM.png")
 
 def cmd_ahegao(bot, msg, cmds):
-	ahegao = ["http://i.imgur.com/DwOflwW.jpg","http://i.imgur.com/HQdXc2B.jpg","http://i.imgur.com/rrkWBF9.jpg","http://i.imgur.com/9aLXKlT.jpg","http://i.imgur.com/PubL4KZ.jpg","i.imgur.com/XKkFPYg.jpg","http://i.imgur.com/mVMVQS8.png","http://i.imgur.com/PdprpMW.jpg","http://i.imgur.com/h6vGR5S.jpg","http://i.imgur.com/Ou4hWL9.png","http://i.imgur.com/f998ULI.jpg","http://i.imgur.com/LsXIzYJ.png"]
+	ahegao = ["http://i.imgur.com/DwOflwW.jpg","http://i.imgur.com/HQdXc2B.jpg","http://i.imgur.com/rrkWBF9.jpg","http://i.imgur.com/9aLXKlT.jpg","http://i.imgur.com/PubL4KZ.jpg","http://i.imgur.com/XKkFPYg.jpg","http://i.imgur.com/mVMVQS8.png","http://i.imgur.com/PdprpMW.jpg","http://i.imgur.com/h6vGR5S.jpg","http://i.imgur.com/Ou4hWL9.png","http://i.imgur.com/f998ULI.jpg","http://i.imgur.com/LsXIzYJ.png"]
 	yield from bot.send_typing(msg.channel)
 	yield from bot.send_message(msg.channel, "{}".format(random.choice(ahegao)))
 
@@ -973,6 +991,11 @@ def cmd_kkk(bot, msg, cmds):
 	yield from bot.send_typing(msg.channel)
 	yield from bot.send_message(msg.channel, "http://i.imgur.com/B6Zfqox.jpg")
 
+def cmd_salty(bot, msg, cmds):
+	salt = ["http://i.imgur.com/wzwmvhj.jpg","http://i.imgur.com/SeENIgh.jpg","http://i.imgur.com/8Se1zxf.jpg","http://i.imgur.com/6lclZFb.jpg"]
+	yield from bot.send_typing(msg.channel)
+	yield from bot.send_message(msg.channel, format(random.choice(salt)))
+
 #+-------- Skype Emoticons --------+
 def cmd_bandit(bot, msg, cmds):
 	yield from bot.send_typing(msg.channel)
@@ -1054,6 +1077,8 @@ commands = {
 	"!getserver":cmd_serverinfo,
 	"!getid":cmd_chanid,
 	"!servers":cmd_servers,
+	"!join":cmd_join,
+	"!leave":cmd_leave,
 	"!calc":cmd_calc,
 	"!dice":cmd_dice,
 	"!say":cmd_say,
@@ -1115,6 +1140,7 @@ commands = {
 	"!goodshit":cmd_goodshit,
 	"!spork":cmd_spork,
 	"!rekt":cmd_rekt,
+	"!pr0n":cmd_porn,
 	"!porn":cmd_porn,
 	"!gayporn":cmd_gayporn,
 	"!anotherone":cmd_anotherone,
@@ -1123,6 +1149,7 @@ commands = {
 	"!cancer":cmd_cancer,
 	"!jigabootime":cmd_jigabootime,
 	"!kkk":cmd_kkk,
+	"!salty":cmd_salty,
 	#Skype emoticons -
 	"!bandit":cmd_bandit,
 	"!cool":cmd_cool,
