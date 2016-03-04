@@ -1,2 +1,5 @@
 pingbot.ini
 senpaibot.ini
+__pycache__/*
+lib/__pycache__/*
+!lib/core.py
