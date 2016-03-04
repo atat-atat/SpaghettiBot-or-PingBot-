@@ -10,6 +10,6 @@ proj      -- returns information about Project commands.
 meme      -- returns information about Meme commands.
 default   -- returns information about the system commands.
 notes     -- returns information about Note commands.
-comp      -- returns information about Component commands.
+petrock   -- returns information about the Pet Rock commands.
 
 EXAMPLE: !help odd <-- returns information about odd commands.
