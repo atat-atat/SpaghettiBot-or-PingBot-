@@ -540,7 +540,7 @@ def cmd_userinfo(bot, msg, cmds, usage='`USAGE: !getuser @<user>`'):
 	if len(msg.mentions) > 0:
 		for user in msg.mentions:
 			yield from bot.send_typing(msg.channel)
-			yield from bot.send_message(msg.channel, "```+---------- User Information of {} ----------+\r\nName: {}\r\nID: {}\r\nJoined: {}\r\nDiscriminator: {}\r\nAvatar: {}\r\n+----------------------------------+``` {}".format(user.name, user.name, user.id, user.joined_at.isoformat(), user.discriminator, user.avatar, user.avatar_url))
+			yield from bot.send_message(msg.channel, "```+---------- User Information of {} ----------+\r\nName: {}\r\nStatus: {}\r\nID: {}\r\nJoined: {}\r\nDiscriminator: {}\r\nAvatar: {}\r\nCurrently playing: {}\r\nAFK: {}\r\nMuted: {}\r\nDeafened: {}\r\nVoice Muted: {}\r\nSound Muted: {}\r\n+----------------------------------+``` {}".format(user.name, user.name, user.status, user.id, user.joined_at.isoformat(), user.discriminator, user.avatar, user.game, user.is_afk, user.mute, user.deaf, user.self_mute, user.self_deaf, user.avatar_url))
 	else:
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, "Error! You must use mentions!\r\n{}".format(usage))
@@ -548,7 +548,12 @@ def cmd_userinfo(bot, msg, cmds, usage='`USAGE: !getuser @<user>`'):
 def cmd_serverinfo(bot, msg, cmds, usage='`USAGE: !getserver`'):
 	srvr = msg.server
 	yield from bot.send_typing(msg.channel)
-	yield from bot.send_message(msg.channel, "```+---------- Server Info of {} ----------+\r\nServer Name: {}\r\nServer ID: {}\r\nRegion: {}\r\nOwner: {}\r\nDefault Role: {}\r\nDefault Channel: {}\r\nCurrent Channel ID: {}\r\nServer Icon: {}\r\n+----------------------------------+```{}".format(srvr.name, srvr.name, srvr.id, srvr.region, srvr.owner, srvr.default_role.name, srvr.default_channel, msg.channel.id, srvr.icon, srvr.icon_url))
+	yield from bot.send_message(msg.channel, "```+---------- Server Info of {} ----------+\r\nServer Name: {}\r\nServer ID: {}\r\nRegion: {}\r\nOwner: {}\r\nDefault Role: {}\r\nDefault Channel: {}\r\nDefault Channel ID: {}\r\nCurrent Channel ID: {}\r\nServer Icon: {}\r\n+----------------------------------+```{}".format(srvr.name, srvr.name, srvr.id, srvr.region, srvr.owner, srvr.default_role.name, srvr.default_channel, srvr.default_channel.id, msg.channel.id, srvr.icon, srvr.icon_url))
+
+def cmd_servers(bot, msg, cmds, usage="`USAGE: !servers`"):
+	for server in bot.servers:
+		yield from bot.send_typing(msg.channel)
+		yield from bot.send_message(msg.channel, "PingBot is currently running on the servers: \r\n`{}`:`{}`".format(server.name, server.id))
 
 def cmd_chanid(bot, msg, cmds, usage='`USAGE: !getid`'):
 	srvr = msg.server
@@ -1048,6 +1053,7 @@ commands = {
 	"!getuser":cmd_userinfo,
 	"!getserver":cmd_serverinfo,
 	"!getid":cmd_chanid,
+	"!servers":cmd_servers,
 	"!calc":cmd_calc,
 	"!dice":cmd_dice,
 	"!say":cmd_say,
