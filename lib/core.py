@@ -8,7 +8,7 @@ import user
 import sys
 import random
 import dropbox
-import aiohttp
+from PIL import Image, ImageFont, ImageDraw
 
 #load config again
 fp_infos = open("pingbot.ini","r")
@@ -860,6 +860,10 @@ def cmd_mentionoppy(bot, msg, cmds, usage="`USAGE: !oppy or @@@`"):
 	yield from bot.send_typing(msg.channel)
 	yield from bot.send_message(msg.channel, "<@102964575992832000>")
 
+def cmd_github(bot, msg, cmds, usage="`USAGE: !github`"):
+	yield from bot.send_typing(msg.channel)
+	yield from bot.send_message(msg.channel, "https://github.com/oppers/SpaghettiBot-or-PingBot-")
+
 #------ Old Fat Ned Merge ---------
 def cmd_autism(bot, msg, cmds, usage='`USAGE: !autism @<user>`'):
 	if len(msg.mentions) > 0:
@@ -939,8 +943,19 @@ def cmd_xd(bot, msg, cmds):
 	yield from bot.send_message(msg.channel, "http://i.imgur.com/bgdqZ6a.gif")
 
 def cmd_rip(bot, msg, cmds):
-	yield from bot.send_typing(msg.channel)
-	yield from bot.send_message(msg.channel, "http://i.imgur.com/Ij5lWrM.png")
+	if len(msg.mentions) > 0:
+		for user in msg.mentions:
+			img = Image.open("rip.jpg")
+			draw = ImageDraw.Draw(img)
+			# font = ImageFont.truetype(<font-file>, <font-size>)
+			font = ImageFont.truetype("comic.ttf", 28)
+			# draw.text((x, y),"Sample Text",(r,g,b))
+			draw.text((58, 149),"@{} :(".format(user),(0,0,0),font=font)
+			img.save('rip-radioedit.jpg')
+			yield from bot.send_file(msg.channel, "rip-radioedit.jpg")
+	else:
+		yield from bot.send_typing(msg.channel)
+		yield from bot.send_message(msg.channel, "http://i.imgur.com/Ij5lWrM.png")
 
 def cmd_ahegao(bot, msg, cmds):
 	ahegao = ["http://i.imgur.com/DwOflwW.jpg","http://i.imgur.com/HQdXc2B.jpg","http://i.imgur.com/rrkWBF9.jpg","http://i.imgur.com/9aLXKlT.jpg","http://i.imgur.com/PubL4KZ.jpg","http://i.imgur.com/XKkFPYg.jpg","http://i.imgur.com/mVMVQS8.png","http://i.imgur.com/PdprpMW.jpg","http://i.imgur.com/h6vGR5S.jpg","http://i.imgur.com/Ou4hWL9.png","http://i.imgur.com/f998ULI.jpg","http://i.imgur.com/LsXIzYJ.png"]
@@ -1196,6 +1211,7 @@ commands = {
 	"!sim":cmd_simr,
 	"!oppy":cmd_mentionoppy,
 	"@@@":cmd_mentionoppy,
+	"!github":cmd_github,
 	#Misc Fun commands -
 	"!petrock":cmd_petrock,
 	#Start Bot commands -
