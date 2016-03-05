@@ -3,3 +3,4 @@ avatar     -- gets the avatar of a user.
 getuser    -- gets information of a user.
 getserver  -- gets statistic-related information about the server.
 info       -- gets the information of the server.
+github     -- returns the github link.
