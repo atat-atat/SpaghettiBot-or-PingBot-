@@ -1136,6 +1136,10 @@ def cmd_worry(bot, msg, cmds):
 	yield from bot.send_typing(msg.channel)
 	yield from bot.send_message(msg.channel, "http://i.imgur.com/cRF40Wq.gif")
 
+def cmd_worrying(bot, msg, cmds):
+	yield from bot.send_typing(msg.channel)
+	yield from bot.send_message(msg.channel, "http://i.imgur.com/ozvIQlL.gif")
+
 def cmd_swearing(bot, msg, cmds):
 	yield from bot.send_typing(msg.channel)
 	yield from bot.send_message(msg.channel, "http://i.imgur.com/MLnRBvx.gif")
@@ -1245,6 +1249,7 @@ commands = {
 	"!envy":cmd_envy,
 	"!gasp":cmd_gasp,
 	"!worry":cmd_worry,
+	"!worrying":cmd_worrying,
 	"!laugh":cmd_laughing,
 	"!kiss":cmd_kiss,
 	"!heartbreak":cmd_heartbreak,
