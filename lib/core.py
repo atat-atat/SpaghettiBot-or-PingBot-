@@ -436,8 +436,9 @@ def cmd_say(bot, msg, cmds, usage='`USAGE: !say <message>`'):
 	say = msg.content[len("!say "):].strip()
 	if len(say) > 0:
 		if "!say" not in say:
-			yield from bot.send_typing(msg.channel)
-			yield from bot.send_message(msg.channel, say)
+			if ";kick" not in say:
+				yield from bot.send_typing(msg.channel)
+				yield from bot.send_message(msg.channel, say)
 	else:
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, usage)
@@ -855,6 +856,10 @@ def cmd_simr(bot, msg, cmds, usage="`USAGE: !sim <simulator>`"):
 	yield from bot.send_typing(msg.channel)
 	yield from bot.send_message(msg.channel, "`{}`: {}".format(simn, random.choice(simu)))
 
+def cmd_mentionoppy(bot, msg, cmds, usage="`USAGE: !oppy or @@@`"):
+	yield from bot.send_typing(msg.channel)
+	yield from bot.send_message(msg.channel, "<@102964575992832000>")
+
 #------ Old Fat Ned Merge ---------
 def cmd_autism(bot, msg, cmds, usage='`USAGE: !autism @<user>`'):
 	if len(msg.mentions) > 0:
@@ -1189,6 +1194,8 @@ commands = {
 	"!uptime":cmd_uptime,
 	"!simu":cmd_simu,
 	"!sim":cmd_simr,
+	"!oppy":cmd_mentionoppy,
+	"@@@":cmd_mentionoppy,
 	#Misc Fun commands -
 	"!petrock":cmd_petrock,
 	#Start Bot commands -
