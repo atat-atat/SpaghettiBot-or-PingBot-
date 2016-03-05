@@ -24,7 +24,7 @@ def on_server_join(server):
 
 @bot.async_event
 def on_message(msg):
-	if "Senpai" or "senpai" in msg.content:
+	if msg.content.startswith("Senpai") or msg.content.startswith("senpai"):
 		if "notice" in msg.content: #notice command
 			if "me" in msg.content:
 				notice = ["Noticed you!","No.","Maybe."]
@@ -47,6 +47,26 @@ def on_message(msg):
 				yield from bot.accept_invite(invite)
 				yield from bot.send_typing(msg.channel)
 				yield from bot.send_message(msg.channel, "Joining {}!".format(invite))
+
+		if "leave" in msg.content:
+			if msg.channel.is_private:
+				yield from bot.send_typing(msg.channel)
+				yield from bot.send_message(msg.channel, "I cannot leave a PM.")
+			else:
+				yield from bot.send_typing(msg.channel)
+				yield from bot.send_message(msg.channel, "Good bye!")
+				yield from bot.leave_server(msg.server)
+
+		if "say" in msg.content:
+			say = msg.content[len("say "):].strip()
+			yield from bot.send_typing(msg.channel)
+			yield from bot.send_message(msg.channel, say)
+
+		if "quit" in msg.content:
+			yield from bot.send_typing(msg.channel)
+			yield from bot.send_message(msg.channel, "*Quitting...*")
+			sys.exit()
+
 	print("[CHAT][{}][{}][{}]: {}".format(str(msg.server), str(msg.channel), str(msg.author), msg.content))
 
 

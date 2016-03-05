@@ -8,6 +8,7 @@ import user
 import sys
 import random
 import dropbox
+import aiohttp
 
 #load config again
 fp_infos = open("pingbot.ini","r")
@@ -778,6 +779,15 @@ def cmd_restart(bot, msg, cmds, usage='`USAGE: !restart`'):
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, "*Restarting...*")
 		os.startfile("pingbot.bat")
+		sys.exit()
+	else:
+		yield from bot.send_typing(msg.channel)
+		yield from bot.send_message(msg.channel, "You do not have the permission to use that command!")
+
+def cmd_quit(bot, msg, cmds, usage='`USAGE: !quit`'):
+	if msg.author.id == bot_owner:
+		yield from bot.send_typing(msg.channel)
+		yield from bot.send_message(msg.channel, "*Quitting...*")
 		sys.exit()
 	else:
 		yield from bot.send_typing(msg.channel)
