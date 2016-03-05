@@ -70,6 +70,11 @@ def on_message(msg):
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, "`{}` has payed respects.".format(msg.author.name))
 
+	if "im" in msg.content:
+		if "satanist" in msg.content:
+			yield from bot.send_typing(msg.channel)
+			yield from bot.send_message(msg.channel, "Heil satan!")
+
 #do stuff when on_ready
 @bot.async_event
 def on_ready():

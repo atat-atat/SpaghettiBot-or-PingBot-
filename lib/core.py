@@ -943,17 +943,17 @@ def cmd_xd(bot, msg, cmds):
 	yield from bot.send_message(msg.channel, "http://i.imgur.com/bgdqZ6a.gif")
 
 def cmd_rip(bot, msg, cmds):
-	if len(msg.mentions) > 0:
-		for user in msg.mentions:
-			img = Image.open("rip.jpg")
-			draw = ImageDraw.Draw(img)
+	try:
+		name = msg.content[len("!rip "):].strip()
+		img = Image.open("rip.jpg")
+		draw = ImageDraw.Draw(img)
 			# font = ImageFont.truetype(<font-file>, <font-size>)
-			font = ImageFont.truetype("comic.ttf", 28)
+		font = ImageFont.truetype("comic.ttf", 28)
 			# draw.text((x, y),"Sample Text",(r,g,b))
-			draw.text((58, 149),"@{} :(".format(user),(0,0,0),font=font)
-			img.save('rip-radioedit.jpg')
-			yield from bot.send_file(msg.channel, "rip-radioedit.jpg")
-	else:
+		draw.text((58, 149),"{} :(".format(name),(0,0,0),font=font)
+		img.save('rip-radioedit.jpg')
+		yield from bot.send_file(msg.channel, "rip-radioedit.jpg")
+	except IndexError:
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, "http://i.imgur.com/Ij5lWrM.png")
 
