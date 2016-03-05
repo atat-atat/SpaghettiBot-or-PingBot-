@@ -68,7 +68,7 @@ def on_message(msg):
 
 	if msg.content.startswith("F"): #respect payer
 		yield from bot.send_typing(msg.channel)
-		yield from bot.send_message(msg.channel, "`{}` has payed respects.".format(msg.author.name))
+		yield from bot.send_message(msg.channel, "`{}` has paid respects.".format(msg.author.name))
 
 	if "im" in msg.content:
 		if "satanist" in msg.content:

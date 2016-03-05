@@ -935,8 +935,9 @@ def cmd_kek(bot, msg, cmds):
 	yield from bot.send_message(msg.channel, "{}".format(random.choice(kek)))
 
 def cmd_ded(bot, msg, cmds):
+	deds = ["http://i.imgur.com/U0aFyDu.jpg","http://i.imgur.com/rSxpalQ.jpg"]
 	yield from bot.send_typing(msg.channel)
-	yield from bot.send_message(msg.channel, "http://i.imgur.com/U0aFyDu.jpg")
+	yield from bot.send_message(msg.channel, format(random.choice(deds)))
 
 def cmd_xd(bot, msg, cmds):
 	yield from bot.send_typing(msg.channel)
