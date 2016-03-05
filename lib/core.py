@@ -864,6 +864,11 @@ def cmd_github(bot, msg, cmds, usage="`USAGE: !github`"):
 	yield from bot.send_typing(msg.channel)
 	yield from bot.send_message(msg.channel, "https://github.com/oppers/SpaghettiBot-or-PingBot-")
 
+def cmd_me(bot, msg, cmds, usage="`USAGE: !me <activity>`"):
+	act = msg.content[len("!me "):].strip()
+	yield from bot.send_typing(msg.channel)
+	yield from bot.send_message(msg.channel, "*`{}`* *{}*".format(msg.author.name, act))
+
 #------ Old Fat Ned Merge ---------
 def cmd_autism(bot, msg, cmds, usage='`USAGE: !autism @<user>`'):
 	if len(msg.mentions) > 0:
@@ -1213,6 +1218,7 @@ commands = {
 	"!oppy":cmd_mentionoppy,
 	"@@@":cmd_mentionoppy,
 	"!github":cmd_github,
+	"!me":cmd_me,
 	#Misc Fun commands -
 	"!petrock":cmd_petrock,
 	#Start Bot commands -
