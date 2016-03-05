@@ -34,6 +34,8 @@ avatar = open('avatar.png', 'rb')
 avatarurl = avatar.read()
 avatar.close()
 
+start = time.time()
+
 #global status
 
 #!help command
@@ -297,38 +299,38 @@ def cmd_petrock(bot, msg, cmds, usage="`USAGE: !petrock <action> <optional>`"):
 		petrock_health = "is plotting something."
 
 
-def cmd_game(bot, msg, cmds, usage="`USAGE: !game ;GAME`"):
+def cmd_game(bot, msg, cmds, usage="`USAGE: !game GAME`"):
 	if msg.channel.is_private:
 		yield from bot.send_typing(msg.author)
 		yield from bot.send_message(msg.author, "You cannot use this command in a PM!")
 	else:
 		try:
-			gamen = msg.content.split(" ;")[1]
+			gamen = msg.content[len("!game "):].strip()
 			if len(gamen) > 1000:
 				yield from bot.send_typing(msg.channel)
 				yield from bot.send_message(msg.channel, "The name of that game is too long!")
 			else:
-				yield from bot.change_status(discord.Game(name="{}".format(gamen)), idle=False)
+				yield from bot.change_status(discord.Game(name=gamen), idle=False)
 				yield from bot.send_typing(msg.channel)
-				yield from bot.send_message(msg.channel, "PingBot is now playing {}!".format(gamen))
+				yield from bot.send_message(msg.channel, "PingBot is now playing `{}`!".format(gamen))
 		except IndexError:
 			yield from bot.send_typing(msg.channel)
 			yield from bot.send_message(msg.channel, "Error! You must specify the game!\r\n{}".format(usage))
 
-def cmd_botname(bot, msg, cmds, usage="`USAGE: !name ;BOT_NAME`"):
+def cmd_botname(bot, msg, cmds, usage="`USAGE: !name BOT_NAME`"):
 	if msg.channel.is_private:
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, "You can not use this command in a PM!")
 	else:
 		try:
-			botn = msg.content.split(" ;")[1]
+			botn = msg.content[len("!name "):].strip()
 			if len(botn) > 120:
 				yield from bot.send_typing(msg.channel)
 				yield from bot.send_message(msg.channel, "That name is too long!")
 			else:
 				yield from bot.edit_profile(password=infos[1], username=botn)
 				yield from bot.send_typing(msg.channel)
-				yield from bot.send_message(msg.channel, "PingBot has transformed into a {}!".format(botn))
+				yield from bot.send_message(msg.channel, "PingBot has transformed into a `{}`!".format(botn))
 		except IndexError:
 			yield from bot.send_typing(msg.channel)
 			yield from bot.send_message(msg.channel, "Error! You must specify the name!\r\n{}".format(usage))
@@ -429,14 +431,14 @@ def cmd_yn(bot, msg, cmds, usage='`USAGE: !yesorno`'):
 	yn = ["Yes","No","Maybe"]
 	yield from bot.send_message(msg.channel, "{}".format(random.choice(yn)))
 
-def cmd_say(bot, msg, cmds, usage='`USAGE: !say ;<message>`'):
-	try:
-		messg = msg.content.split(" ;")[1]
+def cmd_say(bot, msg, cmds, usage='`USAGE: !say <message>`'):
+	say = msg.content[len("!say "):].strip()
+	if len(say) > 0:
 		yield from bot.send_typing(msg.channel)
-		yield from bot.send_message(msg.channel, "{}".format(messg))
-	except IndexError:
+		yield from bot.send_message(msg.channel, say)
+	else:
 		yield from bot.send_typing(msg.channel)
-		yield from bot.send_message(msg.channel, "Error! You need to specify the message!\r\n{}".format(usage))
+		yield from bot.send_message(msg.channel, usage)
 
 #def cmd_echo(bot, msg, cmds):
 #	yield from bot.send_message(msg.channel, "You said: {}".format(message.content.lstrip("!echo ")))
@@ -594,6 +596,20 @@ def cmd_getinvite(bot, msg, cmds, usage="`USAGE: !getinvite`"):
 		yield from bot.create_invite(msg.channel)
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, "Got invite: ")
+
+def cmd_uptime(bot, msg, cmds, usage="`USAGE: !uptime`"):
+	stop = time.time()
+	seconds = stop - start
+	days = int(((seconds/60)/60)/24)
+	hours = int((seconds/60)/60 - (days * 24))
+	minutes = int((seconds/60)%60)
+	seconds = int(seconds%60)
+	days = str(days)
+	hours = str(hours)
+	minutes = str(minutes)
+	seconds = str(seconds)
+	time_parse = "Uptime: **{} days, {} hours, {} minutes, and {} seconds**".format(days, hours, minutes, seconds)
+	yield from bot.send_message(msg.channel, time_parse)
 
 def cmd_servers(bot, msg, cmds, usage="`USAGE: !servers`"):
 	for server in bot.servers:
@@ -1108,6 +1124,7 @@ commands = {
 	"!ban":cmd_banu,
 	"!unban":cmd_unbanu,
 	"!invite":cmd_getinvite,
+	"!uptime":cmd_uptime,
 	#Misc Fun commands -
 	"!petrock":cmd_petrock,
 	#Start Bot commands -
