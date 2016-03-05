@@ -434,8 +434,9 @@ def cmd_yn(bot, msg, cmds, usage='`USAGE: !yesorno`'):
 def cmd_say(bot, msg, cmds, usage='`USAGE: !say <message>`'):
 	say = msg.content[len("!say "):].strip()
 	if len(say) > 0:
-		yield from bot.send_typing(msg.channel)
-		yield from bot.send_message(msg.channel, say)
+		if "!say" not in say:
+			yield from bot.send_typing(msg.channel)
+			yield from bot.send_message(msg.channel, say)
 	else:
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, usage)
@@ -805,6 +806,45 @@ def cmd_why(bot, msg, cmds, usage='`USAGE: !why <category>`'):
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, "```{}```\r\nError! Could not find that category.".format(whyf))
 
+#!simu ;create ;ariasim ;;register
+def cmd_simu(bot, msg, cmds, usage="`USAGE: !simu ;<option> ;<optional>`"):
+	option = msg.content.split(" ;")[1]
+	name = msg.content.split(" ;")[2]
+	if option == "create":
+		string = msg.content.split(" ;")[3]
+		sub_dir = "C:/Users/Oppy/Documents/Projects/Python/Discord Bot/PingBot API/docs/sim"
+		sim_file = open(os.path.join(sub_dir,name+".txt"),"w")
+		sim = sim_file.write(string+"|")
+		sim_file.close()
+		yield from bot.send_typing(msg.channel)
+		yield from bot.send_message(msg.channel, "Created Simulator: `{}` with the first line: `{}`".format(name, string))
+	elif option == "add":
+		string = msg.content.split(" ;")[3]
+		sub_dir = "C:/Users/Oppy/Documents/Projects/Python/Discord Bot/PingBot API/docs/sim"
+		sim_file = open(os.path.join(sub_dir,name+".txt"),"a")
+		sim = sim_file.write(string+"|")
+		sim_file.close()
+		yield from bot.send_typing(msg.channel)
+		yield from bot.send_message(msg.channel, "Added line: `{}` to simulator: `{}`".format(string, name))
+	elif option == "read":
+		sub_dir = "C:/Users/Oppy/Documents/Projects/Python/Discord Bot/PingBot API/docs/sim"
+		sim_file = open(os.path.join(sub_dir,name+".txt"),"r")
+		sim = sim_file.read()
+		sim_file.close()
+		simu = sim.split("|")
+		yield from bot.send_typing(msg.channel)
+		yield from bot.send_message(msg.channel, "`{} Simulator`\r\n{}".format(name, random.choice(simu)))
+
+def cmd_simr(bot, msg, cmds, usage="`USAGE: !sim <simulator>`"):
+	simn = msg.content.split(" ")[1]
+	sub_dir = "C:/Users/Oppy/Documents/Projects/Python/Discord Bot/PingBot API/docs/sim"
+	sim_file = open(os.path.join(sub_dir,simn+".txt"),"r")
+	sim = sim_file.read()
+	sim_file.close()
+	simu = sim.split("|")
+	yield from bot.send_typing(msg.channel)
+	yield from bot.send_message(msg.channel, "`{}`: {}".format(simn, random.choice(simu)))
+
 #------ Old Fat Ned Merge ---------
 def cmd_autism(bot, msg, cmds, usage='`USAGE: !autism @<user>`'):
 	if len(msg.mentions) > 0:
@@ -1013,6 +1053,14 @@ def cmd_salty(bot, msg, cmds):
 	yield from bot.send_typing(msg.channel)
 	yield from bot.send_message(msg.channel, format(random.choice(salt)))
 
+def cmd_smh(bot, msg, cmds):
+	yield from bot.send_typing(msg.channel)
+	yield from bot.send_message(msg.channel, "http://i.imgur.com/Jbe85tc.png")
+
+def cmd_frick(bot, msg, cmds):
+	yield from bot.send_typing(msg.channel)
+	yield from bot.send_message(msg.channel, "http://i.imgur.com/SOoEOFr.png")
+
 #+-------- Skype Emoticons --------+
 def cmd_bandit(bot, msg, cmds):
 	yield from bot.send_typing(msg.channel)
@@ -1125,6 +1173,8 @@ commands = {
 	"!unban":cmd_unbanu,
 	"!invite":cmd_getinvite,
 	"!uptime":cmd_uptime,
+	"!simu":cmd_simu,
+	"!sim":cmd_simr,
 	#Misc Fun commands -
 	"!petrock":cmd_petrock,
 	#Start Bot commands -
@@ -1173,6 +1223,8 @@ commands = {
 	"!jigabootime":cmd_jigabootime,
 	"!kkk":cmd_kkk,
 	"!salty":cmd_salty,
+	"!smh":cmd_smh,
+	"!frick":cmd_frick,
 	#Skype emoticons -
 	"!bandit":cmd_bandit,
 	"!cool":cmd_cool,
