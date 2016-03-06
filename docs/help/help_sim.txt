@@ -1,0 +1,7 @@
+These commands display a simulator, or creates a simulator.
+Use !simu commands for creating, or editing simulators.
+Simu Commands -
+create  -- creates a simulator. USAGE: !simu ;create ;sim_name ;starting_value
+add     -- adds a line to a simulator. USAGE: !simu ;add ;sim_name ;value
+
+Use !sim <sim_name> to load a simulator.

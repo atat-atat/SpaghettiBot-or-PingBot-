@@ -1,0 +1,3 @@
+These commands modify certain aspects of the server through the bot.
+info_edit    -- modifies the !info information. USAGE: !info_edit <value>
+welcome_edit -- modifies the welcome information. USAGE: !welcome_edit <value>
