@@ -37,6 +37,9 @@ avatar.close()
 
 start = time.time()
 
+badman = {"113120719205900288"}
+developers = {"99466732728492032","102964575992832000"}
+
 #global status
 
 #!help command
@@ -441,12 +444,12 @@ def cmd_say(bot, msg, cmds, usage='`USAGE: !say <message>`'):
 					if ";bank" not in say:
 						if ";payday" not in say:
 							if ";slot" not in say:
-								if msg.author.id != '113120719205900288':
+								if msg.author.id not in badman:
 									yield from bot.send_typing(msg.channel)
 									yield from bot.send_message(msg.channel, say)
 								else:
 									yield from bot.send_typing(msg.channel)
-									yield from bot.send_message(msg.channel, "Nice try, Aria.")
+									yield from bot.send_message(msg.channel, "Nice try, {}.".format(msg.author.name))
 				else:
 					yield from bot.send_typing(msg.channel)
 					yield from bot.send_message(msg.channel, "Nice try.")
@@ -459,6 +462,15 @@ def cmd_say(bot, msg, cmds, usage='`USAGE: !say <message>`'):
 	else:
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, usage)
+
+def cmd_globalsay(bot, msg, cmds, usage="`USAGE: !globsay <message>`"):
+	if msg.author.id in developers:
+		say = msg.content[len("!globsay "):].strip()
+		for server in bot.servers: #show what servers the bot is currently on.
+			yield from bot.send_message(server, say)
+	else:
+		yield from bot.send_typing(msg.channel)
+		yield from bot.send_message(msg.channel, "Good one.")
 
 #def cmd_echo(bot, msg, cmds):
 #	yield from bot.send_message(msg.channel, "You said: {}".format(message.content.lstrip("!echo ")))
@@ -814,7 +826,7 @@ def cmd_comp(bot, msg, cmds, usage="`USAGE: !comp <option> <component>`"):
 		yield from bot.send_message(msg.channel, "You do not have the permission to use this command!")
 
 def cmd_restart(bot, msg, cmds, usage='`USAGE: !restart`'):
-	if msg.author.id == bot_owner:
+	if msg.author.id in developers:
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, "*Restarting...*")
 		os.startfile("pingbot.bat")
@@ -1242,6 +1254,7 @@ commands = {
 	"!calc":cmd_calc,
 	"!dice":cmd_dice,
 	"!say":cmd_say,
+	"!globsay":cmd_globalsay,
 	"!ping":cmd_ping,
 	"!swearlist":cmd_swears,
 	"!todo":cmd_todolist,
