@@ -9,6 +9,9 @@ import sys
 import random
 import dropbox
 from PIL import Image, ImageFont, ImageDraw
+import json
+import urllib.parse
+from urllib.request import urlopen
 
 #load config again
 fp_infos = open("pingbot.ini","r")
@@ -928,6 +931,22 @@ def cmd_onlinecheck(bot, msg, cmds, usage="`USAGE: !checko <@user>`"):
 			yield from bot.send_typing(msg.channel)
 			yield from bot.send_message(msg.channel, "That user is offline!")
 
+def cmd_search(bot, msg, cmds, usage="`USAGE: !lmgtfy <result>`"):
+	search_string = msg.content[len("!lmgtfy "):].strip()
+	#search_string = msg.content.split(" ;")[1]
+	query = urllib.parse.urlencode({'q': search_string})
+	url = 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&%s' % query
+	search_response = urllib.request.urlopen(url)
+	search_results = search_response.read().decode("utf8")
+	results = json.loads(search_results)
+	data = results['responseData']
+	print('Total results: %s' % data['cursor']['estimatedResultCount'])
+	hits = data['results']
+	print('Top %d hits:' % len(hits))
+			#len(hits) = 1
+	for h in hits:
+		yield from bot.send_message(msg.channel, h['url'])
+
 #------ Old Fat Ned Merge ---------
 def cmd_autism(bot, msg, cmds, usage='`USAGE: !autism @<user>`'):
 	if len(msg.mentions) > 0:
@@ -1285,6 +1304,7 @@ commands = {
 	"!github":cmd_github,
 	"!me":cmd_me,
 	"!checko":cmd_onlinecheck,
+	#"!lmgtfy":cmd_search,
 	#Misc Fun commands -
 	"!petrock":cmd_petrock,
 	#Start Bot commands -

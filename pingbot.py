@@ -52,7 +52,7 @@ def random_game():
 		#gamef = open(os.path.join(sub_dir,"games.txt"),"r")
 		#games = gamef.read().split(',')
 		#gamef.close()
-		games = ["with a Wii!","Video Games","Yourself","the world.","with magic."]
+		games = ["with a Wii!","Video Games","Yourself","the world.","with magic.","with the black plague.","with Obama.","with ya sistah!", "with Ojas!"]
 		yield from bot.change_status(discord.Game(name="{}".format(random.choice(games)),idle=None))
 		yield from asyncio.sleep(100)
 
@@ -66,7 +66,7 @@ def on_message(msg):
 	if cmd in core.commands: #load the commands
 		yield from core.commands[cmd](bot, msg, cmds)
 
-	if msg.content.startswith("F"): #respect payer
+	if msg.content == "F": #respect payer
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, "`{}` has paid respects.".format(msg.author.name))
 

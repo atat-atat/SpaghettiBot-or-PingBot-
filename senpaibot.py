@@ -3,6 +3,9 @@ import asyncio
 import os
 import sys
 import random
+import json
+import urllib.parse
+from urllib.request import urlopen
 
 bot = discord.Client()
 
@@ -62,6 +65,27 @@ def on_message(msg):
 			yield from bot.send_typing(msg.channel)
 			yield from bot.send_message(msg.channel, say)
 
+		if "search" in msg.content:
+			search_string = msg.content.split(" ;")[1]
+			query = urllib.parse.urlencode({'q': search_string})
+			url = 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&%s' % query
+			search_response = urllib.request.urlopen(url)
+			search_results = search_response.read().decode("utf8")
+			results = json.loads(search_results)
+			data = results['responseData']
+			print('Total results: %s' % data['cursor']['estimatedResultCount'])
+			hits = data['results']
+			print('Top %d hits:' % len(hits))
+			#len(hits) = 1
+			for h in hits:
+				yield from bot.send_message(msg.channel, h['url'])
+			#for h in hits: yield from bot.send_message(msg.channel, h['url'])# print(' ', h['url'])
+			#print('For more results, see %s' % data['cursor']['moreResultsUrl'])
+			#return hits
+			#search(searchin, 1)
+			#yield from bot.send_typing(msg.channel)
+			#yield from bot.send_message(msg.channel, search.hits)
+
 		if "quit" in msg.content:
 			yield from bot.send_typing(msg.channel)
 			yield from bot.send_message(msg.channel, "*Quitting...*")
@@ -69,6 +93,18 @@ def on_message(msg):
 
 	print("[CHAT][{}][{}][{}]: {}".format(str(msg.server), str(msg.channel), str(msg.author), msg.content))
 
-
+def search(search_string):
+	query = urllib.parse.urlencode({'q': search_string})
+	url = 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&%s' % query
+	search_response = urllib.request.urlopen(url)
+	search_results = search_response.read().decode("utf8")
+	results = json.loads(search_results)
+	data = results['responseData']
+	print('Total results: %s' % data['cursor']['estimatedResultCount'])
+	hits = data['results']
+	print('Top %d hits:' % len(hits))
+	for h in hits: print(' ', h['url'])
+	print('For more results, see %s' % data['cursor']['moreResultsUrl'])
+	return hits
 
 bot.run(infos[0], infos[1])
