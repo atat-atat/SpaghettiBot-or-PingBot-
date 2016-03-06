@@ -437,8 +437,18 @@ def cmd_say(bot, msg, cmds, usage='`USAGE: !say <message>`'):
 	if len(say) > 0:
 		if "!say" not in say:
 			if ";kick" not in say:
+				if ";ban" not in say:
+					yield from bot.send_typing(msg.channel)
+					yield from bot.send_message(msg.channel, say)
+				else:
+					yield from bot.send_typing(msg.channel)
+					yield from bot.send_message(msg.channel, "Nice try.")
+			else:
 				yield from bot.send_typing(msg.channel)
-				yield from bot.send_message(msg.channel, say)
+				yield from bot.send_message(msg.channel, "Nice try.")
+		else:
+			yield from bot.send_typing(msg.channel)
+			yield from bot.send_message(msg.channel, "Nice try.")
 	else:
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, usage)
@@ -496,6 +506,27 @@ def cmd_welcome(bot, msg, cmds, usage='`USAGE: !welcome @<user>`'):
 	else:
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, "Error! You must use mentions!\r\n{}".format(usage))
+
+def cmd_welcome_edit(bot, msg, cmds, usage="`USAGE: !welcome_edit <info>`"):
+	if msg.channel.is_private:
+		yield from bot.send_typing(msg.channel)
+		yield from bot.send_message(msg.channel, "You cannot edit the server welcome message via PM!")
+	else:
+		if msg.author.id == msg.server.owner.id:
+			try:
+				servw = msg.content[len("!welcome_edit "):].strip()
+				sub_dir = "C:/Users/Oppy/Documents/Projects/Python/Discord Bot/PingBot API/docs/welcome"
+				welcome_file = open(os.path.join(sub_dir,msg.server.id+".txt"),"w")
+				welcome_file.write(servw)
+				welcome_file.close()
+				yield from bot.send_typing(msg.channel)
+				yield from bot.send_message(msg.channel, "Successfully edited server welcome message!")
+			except IndexError:
+				yield from bot.send_typing(msg.channel)
+				yield from bot.send_message(msg.channel, "Error! You must specify the information you would like to add!\r\n{}".format(usage))
+		else:
+			yield from bot.send_typing(msg.channel)
+			yield from bot.send_message(msg.channel, "You do not have the permission to use this command!")
 
 def cmd_notes(bot, msg, cmds, usage='`USAGE: !note ;<option> ;<name> ;<value>`'): #USAGE: !notes <option> <name> <value>, example: !notes add penis Penis, or !notes read penis will return "Penis"
 	try:
@@ -869,6 +900,15 @@ def cmd_me(bot, msg, cmds, usage="`USAGE: !me <activity>`"):
 	yield from bot.send_typing(msg.channel)
 	yield from bot.send_message(msg.channel, "*`{}`* *{}*".format(msg.author.name, act))
 
+def cmd_onlinecheck(bot, msg, cmds, usage="`USAGE: !checko <@user>`"):
+	for user in msg.mentions:
+		if user.status == user.status.online:
+			yield from bot.send_typing(msg.channel)
+			yield from bot.send_message(msg.channel, "That user is online!")
+		else:
+			yield from bot.send_typing(msg.channel)
+			yield from bot.send_message(msg.channel, "That user is offline!")
+
 #------ Old Fat Ned Merge ---------
 def cmd_autism(bot, msg, cmds, usage='`USAGE: !autism @<user>`'):
 	if len(msg.mentions) > 0:
@@ -1200,6 +1240,7 @@ commands = {
 	"!trueorfalse":cmd_tfq,
 	"!yesorno":cmd_yn,
 	"!welcome":cmd_welcome,
+	"!welcome_edit":cmd_welcome_edit,
 	"!note":cmd_notes,
 	"!notes":cmd_readn,
 	"!checkrole":cmd_chkrole,
@@ -1219,6 +1260,7 @@ commands = {
 	"@@@":cmd_mentionoppy,
 	"!github":cmd_github,
 	"!me":cmd_me,
+	"!checko":cmd_onlinecheck,
 	#Misc Fun commands -
 	"!petrock":cmd_petrock,
 	#Start Bot commands -

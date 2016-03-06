@@ -75,6 +75,16 @@ def on_message(msg):
 			yield from bot.send_typing(msg.channel)
 			yield from bot.send_message(msg.channel, "Heil satan!")
 
+	if len(msg.mentions) > 0:
+		for user in msg.mentions:
+			if user.status == user.status.offline:
+				server = msg.server
+				channel = msg.channel
+				yield from bot.send_typing(msg.channel)
+				yield from bot.send_message(msg.channel, "`{}` is currently offline!\r\nYour message has been sent via PM.".format(user.name))
+				yield from bot.send_typing(user)
+				yield from bot.send_message(user, "`{}` mentioned you while you were away in the server: {} (#{}).\r\n\r\n{}".format(msg.author.name, server, channel, msg.content))
+
 #do stuff when on_ready
 @bot.async_event
 def on_ready():
@@ -98,11 +108,20 @@ def on_message_delete(msg):
 
 @bot.async_event
 def on_member_join(member):
-	server = member.server #show welcome message.
-	fmt = 'Welcome {0.mention} to {1.name}!\r\nType !help for a list of commands, and type !info to get information about this server.'
+	server_id = member.server.id
+	server = member.server
+	sub_dir = "C:/Users/Oppy/Documents/Projects/Python/Discord Bot/PingBot API/docs/welcome"
+	try:
+		welcome_file = open(os.path.join(sub_dir,server_id+".txt"),"r")
+		welcome = welcome_file.read()
+		welcome_file.close()
+	except FileNotFoundError:
+		welcome_file = open(os.path.join(sub_dir,"0.txt"),"r")
+		welcome = welcome_file.read()
+		welcome_file.close()
+	fmt = 'Welcome {0.mention} to {1.name}!\r\n{}'
 	yield from bot.send_typing(server)
-	yield from asyncio.sleep(0.2)
-	yield from bot.send_message(server, fmt.format(member, server))
+	yield from bot.send_message(server, fmt.format(member, server, welcome))
 
 #random messages loop (Disabled for now.)
 loop = asyncio.get_event_loop()
