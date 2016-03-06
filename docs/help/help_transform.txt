@@ -1,4 +1,4 @@
 These commands change specific Bot information.
-name      -- changes the bot name. USAGE: !name ;Name
+name      -- changes the bot name. USAGE: !name Name
 nameorig  -- sets the bot name back to its original name. USAGE: !nameorig
-game      -- set the bots game status. USAGE: !game ;Game
+game      -- set the bots game status. USAGE: !game Game
