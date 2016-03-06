@@ -438,8 +438,15 @@ def cmd_say(bot, msg, cmds, usage='`USAGE: !say <message>`'):
 		if "!say" not in say:
 			if ";kick" not in say:
 				if ";ban" not in say:
-					yield from bot.send_typing(msg.channel)
-					yield from bot.send_message(msg.channel, say)
+					if ";bank" not in say:
+						if ";payday" not in say:
+							if ";slot" not in say:
+								if msg.author.id != '113120719205900288':
+									yield from bot.send_typing(msg.channel)
+									yield from bot.send_message(msg.channel, say)
+								else:
+									yield from bot.send_typing(msg.channel)
+									yield from bot.send_message(msg.channel, "Nice try, Aria.")
 				else:
 					yield from bot.send_typing(msg.channel)
 					yield from bot.send_message(msg.channel, "Nice try.")
@@ -856,7 +863,7 @@ def cmd_simu(bot, msg, cmds, usage="`USAGE: !simu ;<option> ;<optional>`"):
 		string = msg.content.split(" ;")[3]
 		sub_dir = "C:/Users/Oppy/Documents/Projects/Python/Discord Bot/PingBot API/docs/sim"
 		sim_file = open(os.path.join(sub_dir,name+".txt"),"w")
-		sim = sim_file.write(string+"|")
+		sim = sim_file.write("|"+string)
 		sim_file.close()
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, "Created Simulator: `{}` with the first line: `{}`".format(name, string))
@@ -1137,6 +1144,10 @@ def cmd_frick(bot, msg, cmds):
 	yield from bot.send_typing(msg.channel)
 	yield from bot.send_message(msg.channel, "http://i.imgur.com/SOoEOFr.png")
 
+def cmd_aria(bot, msg, cmds):
+	yield from bot.send_typing(msg.channel)
+	yield from bot.send_message(msg.channel, "http://i.imgur.com/PwpZIsl.gif")
+
 #+-------- Skype Emoticons --------+
 def cmd_bandit(bot, msg, cmds):
 	yield from bot.send_typing(msg.channel)
@@ -1311,6 +1322,7 @@ commands = {
 	"!salty":cmd_salty,
 	"!smh":cmd_smh,
 	"!frick":cmd_frick,
+	"!aria":cmd_aria,
 	#Skype emoticons -
 	"!bandit":cmd_bandit,
 	"!cool":cmd_cool,
