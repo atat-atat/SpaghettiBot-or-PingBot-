@@ -119,9 +119,9 @@ def on_member_join(member):
 		welcome_file = open(os.path.join(sub_dir,"0.txt"),"r")
 		welcome = welcome_file.read()
 		welcome_file.close()
-	fmt = 'Welcome {0.mention} to {1.name}!\r\n{}'
+	#fmt = 'Welcome {0.mention} to {1.name}!\r\n{2.welcome}'
 	yield from bot.send_typing(server)
-	yield from bot.send_message(server, fmt.format(member, server, welcome))
+	yield from bot.send_message(server, "Welcome {} to {}!\r\n{}".format(member.mention, server.name, welcome))
 
 #random messages loop (Disabled for now.)
 loop = asyncio.get_event_loop()
