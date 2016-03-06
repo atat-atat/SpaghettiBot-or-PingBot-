@@ -12,6 +12,8 @@ from PIL import Image, ImageFont, ImageDraw
 import json
 import urllib.parse
 from urllib.request import urlopen
+import requests
+from bs4 import BeautifulSoup
 
 #load config again
 fp_infos = open("pingbot.ini","r")
@@ -68,6 +70,10 @@ def cmd_commands(bot, msg, cmds, usage='`USAGE: !help <category>`'):
 		help_file.close()
 		yield from bot.send_typing(msg.channel)
 		yield from bot.send_message(msg.channel, "```{}{}{}```\r\nError! Could not find that category.".format(start_help, helpf, start_help_end))
+
+def cmd_listcommands(bot, msg, cmds, usage="`USAGE: !listcommands`"):
+	yield from bot.send_typing(msg.author)
+	yield from bot.send_message(msg.author, "`List of available commands:` !help,!author,!version,!servers,!dice,!say,!ping,!swearlist,!todo,!letter,!pay,!coinflip,!trueorfalse,!yesorno,!note,!notes,!checkrole,!info,!developers,!why,!invite, !uptime,!simu,!sim,!oppy,@@@,!github,!me,!checko,!petrock,!comp,!autism,!waifu,!no,!no1,!no2,!really,!yes,!triggerd,!clap,!lmao,!kek,!ded,!haha,!rip,!wakemeup,!kappa,!yousmart,!youloyal,!yougrateful,!wordsearch,!gaminginequality,!hanginthere,!crummies,!stump,:bruh:,!whoop,!heybudd,!ahegao,!hitler,!cumstump,!goodshit,!spork,!rekt,!pr0n,!porn,!gayporn,!anotherone,!funfacts,!heil,!cancer,!jigabootime,!kkk,!salty,!frick,!aria,!bandit,!cool,!monkey,!monkey2,!devil,!vomit,!envy,!gasp,!worry,!worrying,!laugh,!kiss,!heartbreak,!sealed,!newyears,!smile,!sad,!swearing")
 
 def cmd_info(bot, msg, cmds, usage='`USAGE: !info`'):
 	try:
@@ -931,8 +937,8 @@ def cmd_onlinecheck(bot, msg, cmds, usage="`USAGE: !checko <@user>`"):
 			yield from bot.send_typing(msg.channel)
 			yield from bot.send_message(msg.channel, "That user is offline!")
 
-def cmd_search(bot, msg, cmds, usage="`USAGE: !lmgtfy <result>`"):
-	search_string = msg.content[len("!lmgtfy "):].strip()
+def cmd_search(bot, msg, cmds, usage="`USAGE: !search <search>`"):
+	search_string = msg.content[len("!search "):].strip()
 	#search_string = msg.content.split(" ;")[1]
 	query = urllib.parse.urlencode({'q': search_string})
 	url = 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&%s' % query
@@ -940,12 +946,40 @@ def cmd_search(bot, msg, cmds, usage="`USAGE: !lmgtfy <result>`"):
 	search_results = search_response.read().decode("utf8")
 	results = json.loads(search_results)
 	data = results['responseData']
-	print('Total results: %s' % data['cursor']['estimatedResultCount'])
+	#print('Total results: %s' % data['cursor']['estimatedResultCount'])
 	hits = data['results']
-	print('Top %d hits:' % len(hits))
+	#print('Top %d hits:' % len(hits))
 			#len(hits) = 1
 	for h in hits:
-		yield from bot.send_message(msg.channel, h['url'])
+		h = h['url']
+	yield from bot.send_message(msg.channel, h)
+
+def cmd_youtube(bot, msg, cmds, usage="`USAGE: !youtube <search>`"):
+	search_string = msg.content[len("!youtube "):].strip()
+	#search_string = msg.content.split(" ;")[1]
+	query = urllib.parse.urlencode({'q': search_string})
+	url = 'https://ajax.googleapis.com/ajax/services/search/video?v=1.0&%s' % query
+	search_response = urllib.request.urlopen(url)
+	search_results = search_response.read().decode("utf8")
+	results = json.loads(search_results)
+	data = results['responseData']
+	#print('Total results: %s' % data['cursor']['estimatedResultCount'])
+	hits = data['results']
+	#print('Top %d hits:' % len(hits))
+			#len(hits) = 1
+	for h in hits:
+		h = h['url']
+	yield from bot.send_message(msg.channel, h)
+
+def cmd_urban(bot, msg, cmds, usage="`USAGE: !urban <search>`"):
+	search_string = msg.content[len("!youtube "):].strip()
+	r = requests.get("http://www.urbandictionary.com/define.php?term={}".format(search_string))
+	soup = BeautifulSoup(r.content)
+	urban = soup.find("div",attrs={"class":"meaning"}).text
+	example = soup.find("div",attrs={"class":"example"}).text
+	contributor = soup.find("div",attrs={"class":"contributor"}).text
+	#print(soup.find("div",attrs={"class":"meaning"}).text)
+	yield from bot.send_message(msg.channel, "{}\r\n{}\r\nContributed by {}".format(urban, example, contributor))
 
 #------ Old Fat Ned Merge ---------
 def cmd_autism(bot, msg, cmds, usage='`USAGE: !autism @<user>`'):
@@ -1255,6 +1289,7 @@ def cmd_swearing(bot, msg, cmds):
 
 commands = {
 	"!help":cmd_commands,
+	"!listcommands":cmd_listcommands,
 	"!author":cmd_author,
 	"!version":cmd_version,
 	"!updavatar":cmd_updavatar,
@@ -1304,7 +1339,9 @@ commands = {
 	"!github":cmd_github,
 	"!me":cmd_me,
 	"!checko":cmd_onlinecheck,
-	#"!lmgtfy":cmd_search,
+	"!search":cmd_search,
+	"!youtube":cmd_youtube,
+	"!urban":cmd_urban,
 	#Misc Fun commands -
 	"!petrock":cmd_petrock,
 	#Start Bot commands -

@@ -6,6 +6,9 @@ import random
 import json
 import urllib.parse
 from urllib.request import urlopen
+import aiohttp
+import requests
+from bs4 import BeautifulSoup
 
 bot = discord.Client()
 
@@ -45,11 +48,11 @@ def on_message(msg):
 			os.startfile("senpaibot.bat")
 			sys.exit()
 
-		if "join" in msg.content: #join command
-				invite = msg.content.split(" ")[2]
-				yield from bot.accept_invite(invite)
-				yield from bot.send_typing(msg.channel)
-				yield from bot.send_message(msg.channel, "Joining {}!".format(invite))
+		#if "join" in msg.content: #join command
+				#invite = msg.content.split(" ")[2]
+				#yield from bot.accept_invite(invite)
+				#yield from bot.send_typing(msg.channel)
+				#yield from bot.send_message(msg.channel, "Joining {}!".format(invite))
 
 		if "leave" in msg.content:
 			if msg.channel.is_private:
@@ -78,13 +81,32 @@ def on_message(msg):
 			print('Top %d hits:' % len(hits))
 			#len(hits) = 1
 			for h in hits:
-				yield from bot.send_message(msg.channel, h['url'])
+				h = h['url']
+			yield from bot.send_message(msg.channel, h)
 			#for h in hits: yield from bot.send_message(msg.channel, h['url'])# print(' ', h['url'])
 			#print('For more results, see %s' % data['cursor']['moreResultsUrl'])
 			#return hits
 			#search(searchin, 1)
 			#yield from bot.send_typing(msg.channel)
 			#yield from bot.send_message(msg.channel, search.hits)
+
+		if "urban" in msg.content:
+			urban_search = msg.content.split(" ;")[1]
+			r = requests.get("http://www.urbandictionary.com/define.php?term={}".format(urban_search))
+			soup = BeautifulSoup(r.content)
+			urban = soup.find("div",attrs={"class":"meaning"}).text
+			example = soup.find("div",attrs={"class":"example"}).text
+			contributor = soup.find("div",attrs={"class":"contributor"}).text
+			#print(soup.find("div",attrs={"class":"meaning"}).text)
+			yield from bot.send_message(msg.channel, "{}\r\n{}\r\nContributed by {}".format(urban, example, contributor))
+
+		if "osu" in msg.content:
+			urban_search = msg.content.split(" ;")[1]
+			r = requests.get("http://www.urbandictionary.com/define.php?term={}".format(urban_search))
+			soup = BeautifulSoup(r.content)
+			avatar = soup.find("div",attrs={"class":"meaning"}).text
+			#print(soup.find("div",attrs={"class":"meaning"}).text)
+			yield from bot.send_message(msg.channel, "{}\r\n{}\r\nContributed by {}".format(urban, example, contributor))
 
 		if "quit" in msg.content:
 			yield from bot.send_typing(msg.channel)
